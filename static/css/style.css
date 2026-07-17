@@ -1,0 +1,550 @@
+/* ========================================
+   RESET
+======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color: #262626;
+
+    background-color: #111111;
+}
+
+a {
+    color: inherit;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+
+/* ========================================
+   TRANG CHỦ
+======================================== */
+
+.home-page {
+    position: relative;
+
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+
+    padding: 40px 20px;
+
+    background:
+        radial-gradient(
+            circle at 12% 15%,
+            rgba(255, 207, 120, 0.9),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 88% 20%,
+            rgba(221, 42, 123, 0.85),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 90%,
+            rgba(81, 91, 212, 0.9),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #ff8a5c 0%,
+            #ff4d5f 32%,
+            #d6299f 65%,
+            #7638c8 100%
+        );
+}
+
+
+/* ========================================
+   HÌNH TRANG TRÍ NỀN
+======================================== */
+
+.background-decoration {
+    position: absolute;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    filter: blur(10px);
+
+    animation: floating 8s ease-in-out infinite;
+}
+
+.decoration-one {
+    width: 320px;
+    height: 320px;
+
+    top: -130px;
+    left: -100px;
+
+    background:
+        rgba(255, 230, 162, 0.32);
+}
+
+.decoration-two {
+    width: 420px;
+    height: 420px;
+
+    right: -160px;
+    bottom: -190px;
+
+    background:
+        rgba(67, 28, 179, 0.35);
+
+    animation-delay: 1.5s;
+}
+
+.decoration-three {
+    width: 160px;
+    height: 160px;
+
+    top: 15%;
+    right: 18%;
+
+    background:
+        rgba(255, 255, 255, 0.14);
+
+    animation-delay: 3s;
+}
+
+@keyframes floating {
+    0%,
+    100% {
+        transform: translateY(0) translateX(0);
+    }
+
+    50% {
+        transform: translateY(-18px) translateX(12px);
+    }
+}
+
+
+/* ========================================
+   KHUNG CHÍNH
+======================================== */
+
+.welcome-card {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    max-width: 440px;
+
+    padding: 48px 42px 40px;
+
+    text-align: center;
+
+    background:
+        rgba(255, 255, 255, 0.88);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.7);
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 25px 70px rgba(65, 13, 91, 0.3);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    animation: card-appear 0.8s ease;
+}
+
+@keyframes card-appear {
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(25px)
+            scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* ========================================
+   BIỂU TƯỢNG CAMERA
+======================================== */
+
+.camera-icon {
+    position: relative;
+
+    width: 64px;
+    height: 64px;
+
+    margin:
+        0 auto
+        22px;
+
+    border: 4px solid #262626;
+    border-radius: 19px;
+}
+
+.camera-icon::before {
+    content: "";
+
+    position: absolute;
+
+    top: -10px;
+    left: 17px;
+
+    width: 24px;
+    height: 11px;
+
+    background-color: #262626;
+
+    border-radius:
+        6px 6px
+        2px 2px;
+}
+
+.camera-lens {
+    position: absolute;
+
+    top: 16px;
+    left: 16px;
+
+    width: 25px;
+    height: 25px;
+
+    border: 4px solid #262626;
+    border-radius: 50%;
+}
+
+.camera-dot {
+    position: absolute;
+
+    top: 9px;
+    right: 9px;
+
+    width: 7px;
+    height: 7px;
+
+    background-color: #262626;
+
+    border-radius: 50%;
+}
+
+
+/* ========================================
+   LOGO VÀ NỘI DUNG
+======================================== */
+
+.logo {
+    margin-bottom: 14px;
+
+    font-family:
+        "Brush Script MT",
+        "Segoe Script",
+        cursive;
+
+    font-size: 58px;
+    font-weight: 500;
+    line-height: 1;
+
+    letter-spacing: 1px;
+
+    color: #262626;
+}
+
+.tagline {
+    margin-bottom: 30px;
+
+    font-size: 16px;
+    line-height: 1.65;
+
+    color: #737373;
+}
+
+
+/* ========================================
+   ĐƯỜNG PHÂN CÁCH
+======================================== */
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    margin-bottom: 28px;
+}
+
+.divider span {
+    flex: 1;
+
+    height: 1px;
+
+    background-color: #d8d8d8;
+}
+
+.divider p {
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    color: #a0a0a0;
+}
+
+
+/* ========================================
+   CÁC NÚT
+======================================== */
+
+.account-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.button {
+    width: 100%;
+    min-height: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 12px 20px;
+
+    border: 1px solid transparent;
+    border-radius: 14px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background-color 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+}
+
+.button:active {
+    transform: translateY(0);
+}
+
+.button-primary {
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff5a63 0%,
+            #d629a3 50%,
+            #7b37d1 100%
+        );
+
+    box-shadow:
+        0 12px 27px rgba(214, 41, 163, 0.25);
+}
+
+.button-primary:hover {
+    box-shadow:
+        0 16px 34px rgba(214, 41, 163, 0.35);
+}
+
+.button-secondary {
+    color: #262626;
+
+    background-color:
+        rgba(255, 255, 255, 0.65);
+
+    border-color: #d7d7d7;
+}
+
+.button-secondary:hover {
+    background-color: #ffffff;
+
+    border-color: #b8b8b8;
+
+    box-shadow:
+        0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.button:focus-visible {
+    outline:
+        3px solid
+        rgba(0, 149, 246, 0.3);
+
+    outline-offset: 3px;
+}
+
+
+/* ========================================
+   ĐIỀU KHOẢN
+======================================== */
+
+.account-note {
+    margin-top: 24px;
+
+    font-size: 12px;
+    line-height: 1.65;
+
+    color: #8e8e8e;
+}
+
+.account-note a {
+    font-weight: 600;
+
+    color: #555555;
+
+    text-decoration: none;
+}
+
+.account-note a:hover {
+    text-decoration: underline;
+}
+
+
+/* ========================================
+   FOOTER
+======================================== */
+
+.footer {
+    position: relative;
+    z-index: 2;
+
+    margin-top: 24px;
+
+    font-size: 13px;
+
+    color:
+        rgba(255, 255, 255, 0.8);
+
+    text-shadow:
+        0 1px 8px
+        rgba(0, 0, 0, 0.2);
+}
+
+
+/* ========================================
+   RESPONSIVE CHO ĐIỆN THOẠI
+======================================== */
+
+@media (max-width: 520px) {
+    .home-page {
+        padding: 24px 16px;
+    }
+
+    .welcome-card {
+        max-width: 390px;
+
+        padding:
+            40px
+            25px
+            34px;
+
+        border-radius: 23px;
+    }
+
+    .camera-icon {
+        width: 58px;
+        height: 58px;
+
+        margin-bottom: 20px;
+    }
+
+    .camera-icon::before {
+        left: 15px;
+    }
+
+    .camera-lens {
+        top: 14px;
+        left: 14px;
+    }
+
+    .logo {
+        font-size: 49px;
+    }
+
+    .tagline {
+        font-size: 15px;
+    }
+
+    .button {
+        min-height: 48px;
+    }
+}
+
+
+/* ========================================
+   MÀN HÌNH RẤT NHỎ
+======================================== */
+
+@media (max-width: 360px) {
+    .welcome-card {
+        padding:
+            34px
+            20px
+            30px;
+    }
+
+    .logo {
+        font-size: 43px;
+    }
+
+    .tagline {
+        font-size: 14px;
+    }
+
+    .account-note {
+        font-size: 11px;
+    }
+}
+
+
+/* ========================================
+   GIẢM CHUYỂN ĐỘNG
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
+    }
+}

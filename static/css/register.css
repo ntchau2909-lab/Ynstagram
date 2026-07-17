@@ -1,0 +1,718 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color: #262626;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(255, 196, 143, 0.9),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 15%,
+            rgba(235, 52, 132, 0.72),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 85% 90%,
+            rgba(95, 69, 210, 0.78),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #ff9f79 0%,
+            #ff5c68 35%,
+            #d42d9c 68%,
+            #6553d4 100%
+        );
+}
+
+a {
+    text-decoration: none;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.register-page {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px 24px;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.register-container {
+    width: 100%;
+    max-width: 1050px;
+    min-height: 650px;
+
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(420px, 0.9fr);
+
+    overflow: hidden;
+
+    background-color: rgba(255, 255, 255, 0.96);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.75);
+
+    border-radius: 30px;
+
+    box-shadow:
+        0 30px 90px
+        rgba(55, 17, 83, 0.28);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+
+/* =========================
+   LEFT INTRO
+========================= */
+
+.register-intro {
+    position: relative;
+
+    min-height: 650px;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 42px;
+
+    color: #ffffff;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 91, 105, 0.96),
+            rgba(210, 42, 154, 0.94) 55%,
+            rgba(102, 72, 211, 0.97)
+        );
+}
+
+.register-intro::before {
+    content: "";
+
+    position: absolute;
+
+    width: 360px;
+    height: 360px;
+
+    top: -170px;
+    right: -140px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.13);
+}
+
+.register-intro::after {
+    content: "";
+
+    position: absolute;
+
+    width: 280px;
+    height: 280px;
+
+    left: -120px;
+    bottom: -140px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 210, 170, 0.14);
+}
+
+.brand {
+    position: relative;
+    z-index: 2;
+
+    width: fit-content;
+
+    font-family:
+        "Brush Script MT",
+        "Segoe Script",
+        cursive;
+
+    font-size: 43px;
+    font-weight: 500;
+
+    color: #ffffff;
+
+    text-shadow:
+        0 6px 18px
+        rgba(0, 0, 0, 0.15);
+}
+
+.intro-content {
+    position: relative;
+    z-index: 2;
+
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 20px 0;
+}
+
+.intro-label {
+    margin-bottom: 14px;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 2.2px;
+
+    color:
+        rgba(255, 255, 255, 0.78);
+}
+
+.intro-content h1 {
+    max-width: 470px;
+
+    margin-bottom: 18px;
+
+    font-size: clamp(34px, 4vw, 52px);
+    line-height: 1.08;
+
+    letter-spacing: -1.5px;
+}
+
+.intro-description {
+    max-width: 460px;
+
+    font-size: 15px;
+    line-height: 1.75;
+
+    color:
+        rgba(255, 255, 255, 0.82);
+}
+
+.intro-footer {
+    position: relative;
+    z-index: 2;
+
+    font-size: 12px;
+
+    color:
+        rgba(255, 255, 255, 0.65);
+}
+
+
+/* =========================
+   PHOTO PREVIEW
+========================= */
+
+.photo-preview {
+    position: relative;
+
+    height: 225px;
+
+    margin-top: 30px;
+}
+
+.preview-card {
+    position: absolute;
+
+    width: 185px;
+
+    overflow: hidden;
+
+    background-color: #ffffff;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 20px 45px
+        rgba(48, 14, 78, 0.28);
+}
+
+.preview-card-one {
+    left: 8px;
+    bottom: 0;
+
+    transform: rotate(-7deg);
+}
+
+.preview-card-two {
+    left: 175px;
+    top: 10px;
+
+    transform: rotate(8deg);
+}
+
+.preview-image {
+    height: 125px;
+}
+
+.image-one {
+    background:
+        linear-gradient(
+            145deg,
+            #ffc371,
+            #ff5f6d 50%,
+            #a445b2
+        );
+}
+
+.image-two {
+    background:
+        linear-gradient(
+            145deg,
+            #89f7fe,
+            #66a6ff 50%,
+            #6454f0
+        );
+}
+
+.preview-info {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 12px;
+
+    color: #262626;
+}
+
+.preview-info strong {
+    display: block;
+
+    margin-bottom: 2px;
+
+    font-size: 11px;
+}
+
+.preview-info p {
+    font-size: 9px;
+
+    color: #8b8b8b;
+}
+
+.avatar {
+    width: 28px;
+    height: 28px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff775f,
+            #d629a0,
+            #6b4ed4
+        );
+}
+
+
+/* =========================
+   RIGHT PANEL
+========================= */
+
+.register-form-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 48px 52px;
+
+    background:
+        rgba(255, 255, 255, 0.98);
+}
+
+.form-header {
+    margin-bottom: 28px;
+}
+
+.form-label {
+    margin-bottom: 10px;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    color: #d629a0;
+}
+
+.form-header h2 {
+    margin-bottom: 9px;
+
+    font-size: 34px;
+    line-height: 1.2;
+
+    letter-spacing: -0.7px;
+}
+
+.form-header > p:last-child {
+    font-size: 14px;
+    line-height: 1.6;
+
+    color: #808080;
+}
+
+
+/* =========================
+   FLASH MESSAGES
+========================= */
+
+.flash-messages {
+    margin-bottom: 18px;
+}
+
+.flash-message {
+    margin-bottom: 9px;
+
+    padding: 12px 14px;
+
+    border-radius: 11px;
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.flash-error {
+    color: #a42a23;
+
+    background-color: #fff1ef;
+
+    border: 1px solid #ffc8c3;
+}
+
+.flash-success {
+    color: #176438;
+
+    background-color: #ecfbf2;
+
+    border: 1px solid #bdeccc;
+}
+
+.flash-warning {
+    color: #80610a;
+
+    background-color: #fff9df;
+
+    border: 1px solid #f2df8a;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 700;
+
+    color: #3d3d3d;
+}
+
+.form-group input {
+    width: 100%;
+    height: 49px;
+
+    padding: 0 15px;
+
+    color: #262626;
+
+    background-color: #f8f8fa;
+
+    border:
+        1px solid
+        #dedee3;
+
+    border-radius: 12px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.form-group input::placeholder {
+    color: #aaaab2;
+}
+
+.form-group input:hover {
+    border-color: #cacad2;
+}
+
+.form-group input:focus {
+    background-color: #ffffff;
+
+    border-color: #d629a0;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(214, 41, 160, 0.11);
+}
+
+
+/* =========================
+   AGREEMENT
+========================= */
+
+.agreement {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    font-size: 12px;
+    line-height: 1.55;
+
+    color: #747474;
+
+    cursor: pointer;
+}
+
+.agreement input {
+    width: 17px;
+    height: 17px;
+
+    flex-shrink: 0;
+
+    margin-top: 1px;
+
+    accent-color: #d629a0;
+
+    cursor: pointer;
+}
+
+.agreement a {
+    font-weight: 700;
+
+    color: #b12691;
+}
+
+.agreement a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.register-button {
+    width: 100%;
+    min-height: 50px;
+
+    margin-top: 4px;
+
+    border: none;
+    border-radius: 12px;
+
+    font-size: 15px;
+    font-weight: 800;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff5864,
+            #d72b9e 55%,
+            #7c3ad2
+        );
+
+    box-shadow:
+        0 12px 25px
+        rgba(210, 43, 158, 0.24);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+}
+
+.register-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 16px 32px
+        rgba(210, 43, 158, 0.32);
+
+    filter: brightness(1.03);
+}
+
+.register-button:active {
+    transform: translateY(0);
+}
+
+
+/* =========================
+   LOGIN LINK
+========================= */
+
+.login-link {
+    margin-top: 22px;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    color: #7a7a7a;
+}
+
+.login-link a {
+    margin-left: 3px;
+
+    font-weight: 800;
+
+    color: #0095f6;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================
+   FOCUS
+========================= */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+    outline:
+        3px solid
+        rgba(0, 149, 246, 0.25);
+
+    outline-offset: 3px;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+    .register-container {
+        max-width: 620px;
+
+        grid-template-columns: 1fr;
+    }
+
+    .register-intro {
+        min-height: 370px;
+
+        padding: 34px;
+    }
+
+    .intro-content {
+        padding-bottom: 0;
+    }
+
+    .photo-preview {
+        display: none;
+    }
+
+    .register-form-panel {
+        padding: 42px;
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 560px) {
+    .register-page {
+        padding: 16px 12px;
+    }
+
+    .register-container {
+        border-radius: 22px;
+    }
+
+    .register-intro {
+        min-height: 260px;
+
+        padding: 26px 22px;
+    }
+
+    .brand {
+        font-size: 36px;
+    }
+
+    .intro-content h1 {
+        font-size: 32px;
+    }
+
+    .intro-description {
+        font-size: 14px;
+    }
+
+    .register-form-panel {
+        padding: 32px 22px;
+    }
+
+    .form-header h2 {
+        font-size: 29px;
+    }
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Ynstagram - Chia sẻ hình ảnh và khoảnh khắc của bạn."
+    >
+
+    <title>Ynstagram</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+<body>
+
+    <main class="home-page">
+
+        <!-- Các hình trang trí nền -->
+        <div class="background-decoration decoration-one"></div>
+        <div class="background-decoration decoration-two"></div>
+        <div class="background-decoration decoration-three"></div>
+
+        <!-- Khung nội dung chính -->
+        <section class="welcome-card">
+
+            <!-- Biểu tượng camera -->
+            <div class="camera-icon" aria-hidden="true">
+                <span class="camera-lens"></span>
+                <span class="camera-dot"></span>
+            </div>
+
+            <!-- Tên website -->
+            <h1 class="logo">
+                Ynstagram
+            </h1>
+
+            <p class="tagline">
+                Chia sẻ khoảnh khắc.
+                <br>
+                Kết nối với mọi người.
+            </p>
+
+            <!-- Đường phân cách -->
+            <div class="divider">
+                <span></span>
+
+                <p>BẮT ĐẦU</p>
+
+                <span></span>
+            </div>
+
+            <!-- Các nút -->
+            <div class="account-actions">
+
+                <a
+                    class="button button-primary"
+                    href="{{ url_for('register') }}"
+                >
+                    Tạo tài khoản
+                </a>
+
+                <a
+                    class="button button-secondary"
+                    href="{{ url_for('login') }}"
+                >
+                    Đăng nhập
+                </a>
+
+            </div>
+
+            <p class="account-note">
+                Bằng cách tiếp tục, bạn đồng ý với
+                <a href="#">Điều khoản sử dụng</a>
+                và
+                <a href="#">Chính sách quyền riêng tư</a>
+                của Ynstagram.
+            </p>
+
+        </section>
+
+        <footer class="footer">
+            <p>
+                © 2026 Ynstagram
+            </p>
+        </footer>
+
+    </main>
+
+</body>
+</html>

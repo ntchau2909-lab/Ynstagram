@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Đăng nhập | Ynstagram</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/login.css') }}"
+    >
+</head>
+
+<body>
+
+    <main class="login-page">
+
+        <section class="login-container">
+
+            <!-- BÊN TRÁI -->
+            <div class="login-intro">
+
+                <a
+                    class="brand"
+                    href="{{ url_for('home') }}"
+                >
+                    Ynstagram
+                </a>
+
+                <div class="intro-content">
+
+                    <p class="intro-label">
+                        WELCOME BACK
+                    </p>
+
+                    <h1>
+                        Chào mừng bạn quay trở lại.
+                    </h1>
+
+                    <p class="intro-description">
+                        Đăng nhập để tiếp tục chia sẻ hình ảnh,
+                        theo dõi bạn bè và khám phá những khoảnh khắc mới.
+                    </p>
+
+                    <div class="social-preview">
+
+                        <div class="story-row">
+
+                            <div class="story-item">
+                                <span class="story-avatar avatar-one"></span>
+                                <p>Your story</p>
+                            </div>
+
+                            <div class="story-item">
+                                <span class="story-avatar avatar-two"></span>
+                                <p>Travel</p>
+                            </div>
+
+                            <div class="story-item">
+                                <span class="story-avatar avatar-three"></span>
+                                <p>Friends</p>
+                            </div>
+
+                        </div>
+
+                        <div class="post-card">
+
+                            <div class="post-header">
+                                <span class="post-avatar"></span>
+
+                                <div>
+                                    <strong>ynstagram</strong>
+                                    <p>Tokyo, Japan</p>
+                                </div>
+                            </div>
+
+                            <div class="post-image"></div>
+
+                            <div class="post-actions">
+                                <span>♡</span>
+                                <span>◯</span>
+                                <span>⌁</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <p class="intro-footer">
+                    © 2026 Ynstagram
+                </p>
+
+            </div>
+
+            <!-- BÊN PHẢI -->
+            <div class="login-form-panel">
+
+                <div class="form-header">
+
+                    <p class="form-label">
+                        ACCOUNT
+                    </p>
+
+                    <h2>
+                        Đăng nhập
+                    </h2>
+
+                    <p>
+                        Nhập thông tin tài khoản của bạn.
+                    </p>
+
+                </div>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <div class="flash-messages">
+
+                            {% for category, message in messages %}
+
+                                <div
+                                    class="flash-message flash-{{ category }}"
+                                    role="alert"
+                                >
+                                    {{ message }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <form
+                    class="login-form"
+                    action="{{ url_for('login') }}"
+                    method="POST"
+                    novalidate
+                >
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input
+                            id="email"
+                            type="email"
+                            name="email"
+                            value="{{ entered_email|default('') }}"
+                            placeholder="example@email.com"
+                            autocomplete="email"
+                            maxlength="254"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <div class="password-label-row">
+
+                            <label for="password">
+                                Mật khẩu
+                            </label>
+
+                            <a
+                                href="#"
+                                class="forgot-password"
+                            >
+                                Quên mật khẩu?
+                            </a>
+
+                        </div>
+
+                        <div class="password-field">
+
+                            <input
+                                id="password"
+                                type="password"
+                                name="password"
+                                placeholder="Nhập mật khẩu"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                class="toggle-password"
+                                type="button"
+                                aria-label="Hiện mật khẩu"
+                                aria-pressed="false"
+                            >
+                                Hiện
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <label class="remember-me">
+
+                        <input
+                            type="checkbox"
+                            name="remember"
+                        >
+
+                        <span>
+                            Ghi nhớ đăng nhập
+                        </span>
+
+                    </label>
+
+                    <button
+                        class="login-button"
+                        type="submit"
+                    >
+                        Đăng nhập
+                    </button>
+
+                </form>
+
+                <div class="divider">
+
+                    <span></span>
+
+                    <p>HOẶC</p>
+
+                    <span></span>
+
+                </div>
+
+                <p class="register-link">
+                    Chưa có tài khoản?
+
+                    <a href="{{ url_for('register') }}">
+                        Đăng ký
+                    </a>
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        const toggleButton = document.querySelector(".toggle-password");
+        const passwordInput = document.querySelector("#password");
+
+        if (toggleButton && passwordInput) {
+            toggleButton.addEventListener("click", function () {
+                const isHidden = passwordInput.type === "password";
+
+                passwordInput.type = isHidden ? "text" : "password";
+
+                toggleButton.textContent = isHidden ? "Ẩn" : "Hiện";
+
+                toggleButton.setAttribute(
+                    "aria-pressed",
+                    String(isHidden)
+                );
+
+                toggleButton.setAttribute(
+                    "aria-label",
+                    isHidden
+                        ? "Ẩn mật khẩu"
+                        : "Hiện mật khẩu"
+                );
+            });
+        }
+    </script>
+
+</body>
+</html>

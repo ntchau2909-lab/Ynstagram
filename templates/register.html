@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Đăng ký | Ynstagram</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/register.css') }}"
+    >
+</head>
+
+<body>
+
+    <main class="register-page">
+
+        <section class="register-container">
+
+            <!-- BÊN TRÁI -->
+            <div class="register-intro">
+
+                <a
+                    class="brand"
+                    href="{{ url_for('home') }}"
+                >
+                    Ynstagram
+                </a>
+
+                <div class="intro-content">
+
+                    <p class="intro-label">
+                        SHARE YOUR MOMENTS
+                    </p>
+
+                    <h1>
+                        Lưu giữ những khoảnh khắc đáng nhớ.
+                    </h1>
+
+                    <p class="intro-description">
+                        Chia sẻ hình ảnh, kết nối với bạn bè và khám phá
+                        những câu chuyện mới mỗi ngày.
+                    </p>
+
+                    <div class="photo-preview">
+
+                        <div class="preview-card preview-card-one">
+                            <div class="preview-image image-one"></div>
+
+                            <div class="preview-info">
+                                <span class="avatar"></span>
+
+                                <div>
+                                    <strong>your_story</strong>
+                                    <p>Summer memories</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="preview-card preview-card-two">
+                            <div class="preview-image image-two"></div>
+
+                            <div class="preview-info">
+                                <span class="avatar"></span>
+
+                                <div>
+                                    <strong>ynstagram</strong>
+                                    <p>Beautiful moments</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <p class="intro-footer">
+                    © 2026 Ynstagram
+                </p>
+
+            </div>
+
+            <!-- BÊN PHẢI -->
+            <div class="register-form-panel">
+
+                <div class="form-header">
+                    <p class="form-label">
+                        CREATE ACCOUNT
+                    </p>
+
+                    <h2>
+                        Tạo tài khoản
+                    </h2>
+
+                    <p>
+                        Điền thông tin bên dưới để bắt đầu.
+                    </p>
+                </div>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <div class="flash-messages">
+                            {% for category, message in messages %}
+                                <div class="flash-message flash-{{ category }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <form
+                    class="register-form"
+                    action="{{ url_for('register') }}"
+                    method="POST"
+                    novalidate
+                >
+
+                    <div class="form-group">
+                        <label for="username">
+                            Tên người dùng
+                        </label>
+
+                        <input
+                            id="username"
+                            type="text"
+                            name="username"
+                            value="{{ entered_username|default('') }}"
+                            placeholder="Nguyễn Văn A"
+                            autocomplete="username"
+                            minlength="2"
+                            maxlength="50"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input
+                            id="email"
+                            type="email"
+                            name="email"
+                            value="{{ entered_email|default('') }}"
+                            placeholder="example@email.com"
+                            autocomplete="email"
+                            maxlength="254"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">
+                            Mật khẩu
+                        </label>
+
+                        <input
+                            id="password"
+                            type="password"
+                            name="password"
+                            placeholder="Ít nhất 8 ký tự"
+                            autocomplete="new-password"
+                            minlength="8"
+                            maxlength="128"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password">
+                            Nhập lại mật khẩu
+                        </label>
+
+                        <input
+                            id="confirm-password"
+                            type="password"
+                            name="confirm_password"
+                            placeholder="Nhập lại mật khẩu"
+                            autocomplete="new-password"
+                            maxlength="128"
+                            required
+                        >
+                    </div>
+
+                    <label class="agreement">
+                        <input
+                            type="checkbox"
+                            required
+                        >
+
+                        <span>
+                            Tôi đồng ý với
+                            <a href="#">
+                                Điều khoản sử dụng
+                            </a>
+                            và
+                            <a href="#">
+                                Chính sách quyền riêng tư
+                            </a>.
+                        </span>
+                    </label>
+
+                    <button
+                        class="register-button"
+                        type="submit"
+                    >
+                        Tạo tài khoản
+                    </button>
+
+                </form>
+
+                <p class="login-link">
+                    Đã có tài khoản?
+
+                    <a href="{{ url_for('login') }}">
+                        Đăng nhập
+                    </a>
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>

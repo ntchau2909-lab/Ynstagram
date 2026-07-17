@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+
+<body>
+
+<h1>Xin chào {{ session["username"] }}</h1>
+
+<p>Bạn đã đăng nhập thành công.</p>
+
+<form action="{{ url_for('logout') }}" method="POST">
+
+    <button type="submit">
+        Đăng xuất
+    </button>
+
+</form>
+
+</body>
+</html>
