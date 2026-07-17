@@ -2,22 +2,795 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Trang chủ | Ynstagram</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/dashboard.css') }}"
+    >
 </head>
 
 <body>
 
-<h1>Xin chào {{ session["username"] }}</h1>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
-<p>Bạn đã đăng nhập thành công.</p>
+        <a
+            class="logo"
+            href="{{ url_for('dashboard') }}"
+        >
+            Ynstagram
+        </a>
 
-<form action="{{ url_for('logout') }}" method="POST">
+        <button
+            id="open-create-modal"
+            class="create-button"
+            type="button"
+        >
+            <span class="create-icon">
+                ＋
+            </span>
 
-    <button type="submit">
-        Đăng xuất
-    </button>
+            <span>
+                Thêm bài viết
+            </span>
+        </button>
 
-</form>
+        <div class="sidebar-user">
+
+            <div class="user-avatar">
+                {{ session["username"][0]|upper }}
+            </div>
+
+            <div>
+                <strong>
+                    {{ session["username"] }}
+                </strong>
+
+                <p>
+                    {{ session["email"] }}
+                </p>
+            </div>
+
+        </div>
+
+        <form
+            class="logout-form"
+            action="{{ url_for('logout') }}"
+            method="POST"
+        >
+            <button
+                class="logout-button"
+                type="submit"
+            >
+                Đăng xuất
+            </button>
+        </form>
+
+    </aside>
+
+
+    <!-- NỘI DUNG CHÍNH -->
+    <main class="dashboard">
+
+        <!-- FLASH MESSAGE -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+
+                <div class="flash-messages">
+
+                    {% for category, message in messages %}
+
+                        <div
+                            class="flash-message flash-{{ category }}"
+                            role="alert"
+                        >
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+        {% endwith %}
+
+
+        <!-- DANH SÁCH BÀI VIẾT -->
+        <section class="feed">
+
+            {% if posts %}
+
+                {% for post in posts %}
+
+                    <article class="post-card">
+
+                        <!-- HEADER BÀI VIẾT -->
+                        <header class="post-header">
+
+                            <div class="post-owner">
+
+                                <div class="post-avatar">
+                                    {{ post["username"][0]|upper }}
+                                </div>
+
+                                <div class="post-user-info">
+
+                                    <strong>
+                                        {{ post["username"] }}
+                                    </strong>
+
+                                    <p>
+                                        {{ post["created_at"] }}
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Chỉ chủ bài viết mới thấy menu xóa -->
+                            {% if post["user_id"] == session["user_id"] %}
+
+                                <div class="post-menu">
+
+                                    <button
+                                        class="post-menu-button"
+                                        type="button"
+                                        aria-label="Tùy chọn bài viết"
+                                        aria-expanded="false"
+                                    >
+                                        •••
+                                    </button>
+
+                                    <div class="post-menu-dropdown">
+
+                                        <form
+                                            action="{{ url_for(
+                                                'delete_post',
+                                                post_id=post['id']
+                                            ) }}"
+                                            method="POST"
+                                            class="delete-post-form"
+                                        >
+                                            <button
+                                                class="delete-post-button"
+                                                type="submit"
+                                            >
+                                                Xóa bài viết
+                                            </button>
+                                        </form>
+
+                                    </div>
+
+                                </div>
+
+                            {% endif %}
+
+                        </header>
+
+
+                        <!-- HÌNH ẢNH -->
+                        <div class="post-image-wrapper">
+
+                            <img
+                                class="post-image"
+                                src="{{ url_for(
+                                    'static',
+                                    filename='uploads/' ~ post['image_filename']
+                                ) }}"
+                                alt="Ảnh của {{ post['username'] }}"
+                                loading="lazy"
+                            >
+
+                        </div>
+
+
+                        <!-- NỘI DUNG TRẠNG THÁI -->
+                        {% if post["caption"] %}
+
+                            <div class="post-bottom">
+
+                                <p class="post-caption">
+
+                                    <strong>
+                                        {{ post["username"] }}
+                                    </strong>
+
+                                    <span>
+                                        {{ post["caption"] }}
+                                    </span>
+
+                                </p>
+
+                            </div>
+
+                        {% endif %}
+
+                    </article>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="empty-feed">
+
+                    <div class="empty-icon">
+                        ＋
+                    </div>
+
+                    <h1>
+                        Chưa có bài viết
+                    </h1>
+
+                    <p>
+                        Nhấn nút “Thêm bài viết” ở bên trái
+                        để đăng ảnh đầu tiên.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+
+    <!-- MODAL TẠO BÀI VIẾT -->
+    <div
+        id="create-modal"
+        class="create-modal"
+        aria-hidden="true"
+    >
+
+        <div
+            id="modal-overlay"
+            class="modal-overlay"
+        ></div>
+
+        <section
+            class="modal-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="create-modal-title"
+        >
+
+            <header class="modal-header">
+
+                <h2 id="create-modal-title">
+                    Thêm bài viết mới
+                </h2>
+
+                <button
+                    id="close-create-modal"
+                    class="close-modal"
+                    type="button"
+                    aria-label="Đóng"
+                >
+                    ×
+                </button>
+
+            </header>
+
+            <form
+                class="create-form"
+                action="{{ url_for('create_post') }}"
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+                <!-- CHỌN ẢNH -->
+                <label
+                    class="image-upload"
+                    for="image"
+                >
+
+                    <input
+                        id="image"
+                        type="file"
+                        name="image"
+                        accept="image/png,image/jpeg,image/gif,image/webp"
+                        required
+                    >
+
+                    <div
+                        id="upload-placeholder"
+                        class="upload-placeholder"
+                    >
+
+                        <div class="upload-icon">
+                            ＋
+                        </div>
+
+                        <strong>
+                            Chọn hình ảnh
+                        </strong>
+
+                        <p>
+                            JPG, PNG, GIF hoặc WEBP
+                        </p>
+
+                    </div>
+
+                    <img
+                        id="image-preview"
+                        class="image-preview"
+                        src=""
+                        alt="Ảnh xem trước"
+                    >
+
+                </label>
+
+
+                <!-- TRẠNG THÁI -->
+                <div class="caption-area">
+
+                    <label for="caption">
+                        Trạng thái
+                    </label>
+
+                    <textarea
+                        id="caption"
+                        name="caption"
+                        maxlength="500"
+                        placeholder="Bạn đang nghĩ gì?"
+                    ></textarea>
+
+                    <div class="caption-footer">
+
+                        <span>
+                            Có thể để trống
+                        </span>
+
+                        <span>
+                            <span id="character-count">0</span>/500
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="publish-button"
+                    type="submit"
+                >
+                    Đăng bài
+                </button>
+
+            </form>
+
+        </section>
+
+    </div>
+
+
+    <!-- MODAL XÁC NHẬN XÓA -->
+    <div
+        id="delete-confirm-modal"
+        class="delete-confirm-modal"
+        aria-hidden="true"
+    >
+
+        <div
+            id="delete-confirm-overlay"
+            class="delete-confirm-overlay"
+        ></div>
+
+        <section
+            class="delete-confirm-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delete-confirm-title"
+        >
+
+            <h2 id="delete-confirm-title">
+                Xóa bài viết?
+            </h2>
+
+            <p>
+                Sau khi xóa, bạn sẽ không thể khôi phục bài viết này.
+            </p>
+
+            <div class="delete-confirm-actions">
+
+                <button
+                    id="cancel-delete-button"
+                    class="cancel-delete-button"
+                    type="button"
+                >
+                    Hủy
+                </button>
+
+                <button
+                    id="confirm-delete-button"
+                    class="confirm-delete-button"
+                    type="button"
+                >
+                    Xóa
+                </button>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <script>
+        // ========================================
+        // MODAL TẠO BÀI VIẾT
+        // ========================================
+
+        const openModalButton =
+            document.querySelector("#open-create-modal");
+
+        const closeModalButton =
+            document.querySelector("#close-create-modal");
+
+        const modalOverlay =
+            document.querySelector("#modal-overlay");
+
+        const createModal =
+            document.querySelector("#create-modal");
+
+        const imageInput =
+            document.querySelector("#image");
+
+        const imagePreview =
+            document.querySelector("#image-preview");
+
+        const uploadPlaceholder =
+            document.querySelector("#upload-placeholder");
+
+        const caption =
+            document.querySelector("#caption");
+
+        const characterCount =
+            document.querySelector("#character-count");
+
+
+        function openCreateModal() {
+            createModal.classList.add("show");
+
+            createModal.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+            document.body.classList.add(
+                "modal-open"
+            );
+        }
+
+
+        function closeCreateModal() {
+            createModal.classList.remove("show");
+
+            createModal.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+            document.body.classList.remove(
+                "modal-open"
+            );
+        }
+
+
+        openModalButton.addEventListener(
+            "click",
+            openCreateModal
+        );
+
+
+        closeModalButton.addEventListener(
+            "click",
+            closeCreateModal
+        );
+
+
+        modalOverlay.addEventListener(
+            "click",
+            closeCreateModal
+        );
+
+
+        // ========================================
+        // XEM TRƯỚC HÌNH ẢNH
+        // ========================================
+
+        imageInput.addEventListener(
+            "change",
+            function () {
+                const file = imageInput.files[0];
+
+                if (!file) {
+                    imagePreview.removeAttribute("src");
+
+                    imagePreview.style.display =
+                        "none";
+
+                    uploadPlaceholder.style.display =
+                        "flex";
+
+                    return;
+                }
+
+                if (!file.type.startsWith("image/")) {
+                    imageInput.value = "";
+
+                    imagePreview.removeAttribute("src");
+
+                    imagePreview.style.display =
+                        "none";
+
+                    uploadPlaceholder.style.display =
+                        "flex";
+
+                    alert(
+                        "Vui lòng chọn một file hình ảnh."
+                    );
+
+                    return;
+                }
+
+                const imageUrl =
+                    URL.createObjectURL(file);
+
+                imagePreview.src = imageUrl;
+
+                imagePreview.style.display =
+                    "block";
+
+                uploadPlaceholder.style.display =
+                    "none";
+            }
+        );
+
+
+        // ========================================
+        // ĐẾM KÝ TỰ
+        // ========================================
+
+        caption.addEventListener(
+            "input",
+            function () {
+                characterCount.textContent =
+                    caption.value.length;
+            }
+        );
+
+
+        // ========================================
+        // MENU BÀI VIẾT
+        // ========================================
+
+        const postMenuButtons =
+            document.querySelectorAll(
+                ".post-menu-button"
+            );
+
+
+        function closeAllPostMenus() {
+            document
+                .querySelectorAll(
+                    ".post-menu-dropdown.show"
+                )
+                .forEach(function (menu) {
+                    menu.classList.remove("show");
+                });
+
+            document
+                .querySelectorAll(
+                    ".post-menu-button[aria-expanded='true']"
+                )
+                .forEach(function (button) {
+                    button.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+                });
+        }
+
+
+        postMenuButtons.forEach(function (button) {
+            button.addEventListener(
+                "click",
+                function (event) {
+                    event.stopPropagation();
+
+                    const menu =
+                        button.nextElementSibling;
+
+                    const willOpen =
+                        !menu.classList.contains("show");
+
+                    closeAllPostMenus();
+
+                    if (willOpen) {
+                        menu.classList.add("show");
+
+                        button.setAttribute(
+                            "aria-expanded",
+                            "true"
+                        );
+                    }
+                }
+            );
+        });
+
+
+        document.addEventListener(
+            "click",
+            closeAllPostMenus
+        );
+
+
+        document
+            .querySelectorAll(
+                ".post-menu-dropdown"
+            )
+            .forEach(function (menu) {
+                menu.addEventListener(
+                    "click",
+                    function (event) {
+                        event.stopPropagation();
+                    }
+                );
+            });
+
+
+        // ========================================
+        // MODAL XÁC NHẬN XÓA
+        // ========================================
+
+        const deleteConfirmModal =
+            document.querySelector(
+                "#delete-confirm-modal"
+            );
+
+        const deleteConfirmOverlay =
+            document.querySelector(
+                "#delete-confirm-overlay"
+            );
+
+        const cancelDeleteButton =
+            document.querySelector(
+                "#cancel-delete-button"
+            );
+
+        const confirmDeleteButton =
+            document.querySelector(
+                "#confirm-delete-button"
+            );
+
+        const deleteForms =
+            document.querySelectorAll(
+                ".delete-post-form"
+            );
+
+        let selectedDeleteForm = null;
+
+
+        function openDeleteConfirmModal(form) {
+            selectedDeleteForm = form;
+
+            deleteConfirmModal.classList.add(
+                "show"
+            );
+
+            deleteConfirmModal.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+            document.body.classList.add(
+                "modal-open"
+            );
+
+            closeAllPostMenus();
+        }
+
+
+        function closeDeleteConfirmModal() {
+            deleteConfirmModal.classList.remove(
+                "show"
+            );
+
+            deleteConfirmModal.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+            selectedDeleteForm = null;
+
+            if (
+                !createModal.classList.contains("show")
+            ) {
+                document.body.classList.remove(
+                    "modal-open"
+                );
+            }
+        }
+
+
+        deleteForms.forEach(function (form) {
+            form.addEventListener(
+                "submit",
+                function (event) {
+                    event.preventDefault();
+
+                    openDeleteConfirmModal(form);
+                }
+            );
+        });
+
+
+        cancelDeleteButton.addEventListener(
+            "click",
+            closeDeleteConfirmModal
+        );
+
+
+        deleteConfirmOverlay.addEventListener(
+            "click",
+            closeDeleteConfirmModal
+        );
+
+
+        confirmDeleteButton.addEventListener(
+            "click",
+            function () {
+                if (selectedDeleteForm) {
+                    selectedDeleteForm.submit();
+                }
+            }
+        );
+
+
+        // ========================================
+        // PHÍM ESCAPE
+        // ========================================
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+                if (event.key !== "Escape") {
+                    return;
+                }
+
+                if (
+                    deleteConfirmModal.classList.contains(
+                        "show"
+                    )
+                ) {
+                    closeDeleteConfirmModal();
+
+                    return;
+                }
+
+                if (
+                    createModal.classList.contains(
+                        "show"
+                    )
+                ) {
+                    closeCreateModal();
+
+                    return;
+                }
+
+                closeAllPostMenus();
+            }
+        );
+    </script>
 
 </body>
 </html>
